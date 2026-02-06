@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.core.config import db
 
-class DicasLugares(db.base):
+class DicaLugar(db.base):
     __tablename__ = "dicas_lugares"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
@@ -13,7 +13,7 @@ class DicasLugares(db.base):
     nome = Column(String, nullable=False)
     descricao = Column(Text, nullable=True)
     
-    telefone = Column(Integer, nullable=True)
+    telefone = Column(String, nullable=True)
     map_link = Column(String, nullable=True)
 
     imovel = relationship("Imovel", back_populates="dicas_lugares")
