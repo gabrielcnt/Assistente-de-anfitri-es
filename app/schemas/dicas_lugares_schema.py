@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, HttpUrl
 from typing import Optional
 from enum import Enum
 
@@ -6,7 +6,7 @@ from enum import Enum
 class DicasLugaresBase(BaseModel):
     descricao: Optional[str] = None
     telefone: Optional[str] = None
-    map_link: Optional[str] = None
+    map_link: Optional[HttpUrl] = None
 
 
 class TipoDica(str, Enum):
@@ -43,6 +43,6 @@ class DicasLugaresSchemaResponse(BaseModel):
     nome: str
     descricao: Optional[str] = None
     telefone: Optional[str] = None
-    map_link: Optional[str] = None
+    map_link: Optional[HttpUrl] = None
 
     model_config = ConfigDict(from_attributes=True)
