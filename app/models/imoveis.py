@@ -23,5 +23,7 @@ class Imovel(db.base):
 
     user = relationship("User", back_populates="imoveis")
     agente = relationship("Agente", back_populates="imoveis")
+    conversa = relationship("Conversa", back_populates="imovel")
+    hospede = relationship("Hospede", back_populates="imovel")
 
     
