@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.engine import Engine
 
-
+Base = declarative_base()
 
 class Database:
     def __init__(self):
@@ -14,6 +14,7 @@ class Database:
             connect_args=self._get_connect_args()
         )
 
+        self.base = Base
 
         if self.database_url.startswith("sqlite"):
             @event.listens_for(Engine, "connect")
@@ -28,7 +29,7 @@ class Database:
             bind=self.engine
         )
 
-        self.base = declarative_base()
+        
 
     def _get_connect_args(self):
 
