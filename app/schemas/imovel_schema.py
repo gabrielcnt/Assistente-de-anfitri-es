@@ -3,6 +3,7 @@ from typing import Optional
 
 class ImovelSchemaCreate(BaseModel):
 
+    
     nome: str
     endereco: str
     regras: Optional[str] = None

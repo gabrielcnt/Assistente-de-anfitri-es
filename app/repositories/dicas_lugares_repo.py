@@ -14,6 +14,7 @@ class DicasLugaresRepository(BaseRepository):
     # Listar dicas de lugares para um imovel, filtrado por categoria
     def list_by_imovel_and_tipo(self, imovel_id:int, tipo: str) -> list[DicaLugar]:
         return self.db.query(DicaLugar).filter(DicaLugar.imovel_id == imovel_id, DicaLugar.tipo == tipo).all()
+    
 
     # Verifica se uma dica com esse nome existe
     def exists_by_nome(self, imovel_id: int, nome: str) -> bool:
