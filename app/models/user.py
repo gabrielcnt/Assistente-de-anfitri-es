@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.core.config import db
 
@@ -10,4 +10,4 @@ class User(db.base):
     email = Column(String, nullable=False, unique=True)
     senha_hash = Column(String, nullable=False)
 
-    imovel = relationship("Imovel", back_populates="users")
+    imovel = relationship("Imovel", back_populates="user")

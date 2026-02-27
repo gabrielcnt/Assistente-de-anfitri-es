@@ -6,14 +6,14 @@ class ImovelRepository(BaseRepository):
     def get_by_id(self, imovel_id: int):
         return self.db.get(Imovel, imovel_id)
     
-    def list_by_user(self, user_id) -> list[Imovel]:
+    def list_by_user(self, user_id: int) -> list[Imovel]:
         return self.db.query(Imovel).filter(Imovel.user_id == user_id).all()
     
-    def get_by_id_and_user(self, imovel_id, user_id):
+    def get_by_id_and_user(self, imovel_id: int, user_id: int):
         return self.db.query(Imovel).filter(Imovel.id == imovel_id, Imovel.user_id == user_id).first()
     
-    def exists_by_nome(self, user_id, nome):
+    def exists_by_nome(self, user_id: int, nome: str):
         return (self.db.query(Imovel).filter(Imovel.user_id == user_id, Imovel.nome == nome).first() is not None)
     
-    def counter_by_user(self, user_id):
+    def counter_by_user(self, user_id: int):
         return (self.db.query(Imovel).filter(Imovel.user_id == user_id).count())

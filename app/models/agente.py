@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Integer, Boolean, Text
+from sqlalchemy.orm import relationship
 
 from app.core.config import db
 
@@ -14,13 +15,15 @@ class Agente(db.base):
 
     numero_whatsapp = Column(String, nullable=False)
     
-    nivel_proatividade = Column(String, nullable=True)
-    usar_emojis = Column(Boolean, nullable=True)
-    idioma_padrão = Column(String, nullable=True, default="pt-br")
+    nivel_proatividade = Column(String, nullable=False)
+    usar_emojis = Column(Boolean, nullable=False)
+    idioma_padrao = Column(String, nullable=True, default="pt-br")
     
     avisos = Column(Text, nullable=True)
-
     is_active = Column(Boolean, default=True)
+
+    imovel = relationship("Imovel", back_populates="agente")
+
     
     def disable(self):
         self.is_active = False

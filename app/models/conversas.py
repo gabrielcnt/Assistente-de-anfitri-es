@@ -10,9 +10,11 @@ class Conversa(db.base):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     imovel_id = Column(Integer, ForeignKey("imoveis.id"))
-    hospede_id = Column(Integer, nullable=False)
+    hospede_id = Column(Integer, ForeignKey("hospedes.id"))
     iniciado_em = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
     encerrado_em = Column(DateTime(timezone=True), nullable=True)
 
-    imovel = relationship("Imovel", back_populates="conversas")
+    imovel = relationship("Imovel", back_populates="conversa")
+    hospede = relationship("Hospede", back_populates="conversa")
+    mensagens = relationship("Mensagem", back_populates="conversa")
