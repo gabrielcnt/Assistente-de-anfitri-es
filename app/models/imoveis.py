@@ -7,7 +7,6 @@ class Imovel(db.base):
     __tablename__ = "imoveis"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    agente_id = Column(Integer, ForeignKey("agentes.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     nome = Column(String, nullable=False)
@@ -22,7 +21,6 @@ class Imovel(db.base):
     wifi_senha = Column(String, nullable=True)
 
     user = relationship("User", back_populates="imoveis")
-    agente = relationship("Agente", back_populates="imoveis")
     conversas = relationship("Conversa", back_populates="imovel", cascade="all, delete-orphan")
     hospedes = relationship("Hospede", back_populates="imovel", cascade="all, delete-orphan")
     dicas_lugares = relationship("DicaLugar", back_populates="imovel", cascade="all, delete-orphan")

@@ -10,4 +10,4 @@ class User(db.base):
     email = Column(String, nullable=False, unique=True)
     senha_hash = Column(String, nullable=False)
 
-    imovel = relationship("Imovel", back_populates="user")
+    imoveis = relationship("Imovel", back_populates="user")
