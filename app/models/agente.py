@@ -22,7 +22,6 @@ class Agente(db.base):
     avisos = Column(Text, nullable=True)
     is_active = Column(Boolean, default=True)
 
-    imoveis = relationship("Imovel", back_populates="agente")
 
     
     def disable(self):

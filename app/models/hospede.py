@@ -14,5 +14,5 @@ class Hospede(db.base):
 
     criado_em = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
-    conversa = relationship("Conversa", back_populates="hospede")
-    imovel = relationship("Imovel", back_populates="imovel")
+    conversas = relationship("Conversa", back_populates="hospede")
+    imovel = relationship("Imovel", back_populates="hospedes")
