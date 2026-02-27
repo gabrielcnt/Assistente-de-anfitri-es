@@ -1,11 +1,7 @@
-from app.core.config import db
+import app.models
 
-from app.models.agente import Agente
-from app.models.imoveis import Imovel
-from app.models.dicas_lugares import DicaLugar
-from app.models.conversas import Conversa
-from app.models.mensagens import Mensagem
-from app.models.user import User
+from app.core.config import Base, engine
+
 
 def init_db():
-    db.base.metadata.create_all(bind=db.engine)
+    Base.metadata.create_all(bind=engine)

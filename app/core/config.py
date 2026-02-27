@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.engine import Engine
 
 Base = declarative_base()
-
 class Database:
     def __init__(self):
         self.database_url = os.getenv("DATABASE_URL", "sqlite:///banco_test.db")
@@ -39,3 +38,12 @@ class Database:
         return {}
 
 db = Database()
+engine = db.engine
+
+def get_db():
+    session = db.SessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
+
