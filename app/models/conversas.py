@@ -13,4 +13,6 @@ class Conversa(db.base):
     hospede_id = Column(Integer, nullable=False)
     iniciado_em = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
+    encerrado_em = Column(DateTime(timezone=True), nullable=True)
+
     imovel = relationship("Imovel", back_populates="conversas")
