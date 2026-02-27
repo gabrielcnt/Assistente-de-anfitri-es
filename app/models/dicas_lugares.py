@@ -7,7 +7,7 @@ class DicaLugar(db.base):
     __tablename__ = "dicas_lugares"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    imovel_id = Column(Integer, ForeignKey("imoveis.id"))
+    imovel_id = Column(Integer, ForeignKey("imoveis.id", ondelete="CASCADE"))
 
     tipo = Column(String, nullable=False)
     nome = Column(String, nullable=False)

@@ -8,7 +8,7 @@ class Hospede(db.base):
     __tablename__ = "hospedes"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    imovel_id = Column(Integer, ForeignKey("imoveis.id"))
+    imovel_id = Column(Integer, ForeignKey("imoveis.id", ondelete="CASCADE"))
     nome = Column(String, nullable=False)
     telefone = Column(String, nullable=False)
 
