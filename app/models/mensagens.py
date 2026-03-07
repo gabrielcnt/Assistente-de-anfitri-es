@@ -15,8 +15,8 @@ class Mensagem(db.base):
     media_url = Column(String, nullable=True)
     mensagem_externa_id = Column(String, nullable=True, index=True)
     conteudo = Column(Text, nullable=False)
-    criado_em = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    
     conversa = relationship("Conversa", back_populates="mensagens")
     
     

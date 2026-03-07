@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime, func
 from sqlalchemy.orm import relationship
 
 from app.core.config import db
@@ -19,6 +19,8 @@ class Imovel(db.base):
     
     wifi_nome = Column(String, nullable=True)
     wifi_senha = Column(String, nullable=True)
+
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
 
     user = relationship("User", back_populates="imoveis")
     conversas = relationship("Conversa", back_populates="imovel", cascade="all, delete-orphan")
