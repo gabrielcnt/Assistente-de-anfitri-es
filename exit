@@ -1,0 +1,103 @@
+[1mdiff --git a/app/main.py b/app/main.py[m
+[1mindex ebf3b92..e613168 100644[m
+[1m--- a/app/main.py[m
+[1m+++ b/app/main.py[m
+[36m@@ -1,5 +1,7 @@[m
+ from fastapi import FastAPI[m
+[32m+[m
+ from app.api import imovel_router[m
+[32m+[m[32mfrom app.api import dicas_lugares_router[m
+ [m
+ from dotenv import load_dotenv[m
+ [m
+[36m@@ -26,6 +28,7 @@[m [masync def lifespan(app: FastAPI):[m
+ [m
+ app = FastAPI(lifespan=lifespan)[m
+ app.include_router(imovel_router.router)[m
+[32m+[m[32mapp.include_router(dicas_lugares_router.router)[m
+ [m
+ @app.get('/health')[m
+ def health():[m
+[1mdiff --git a/app/models/user.py b/app/models/user.py[m
+[1mindex c531936..59d66b1 100644[m
+[1m--- a/app/models/user.py[m
+[1m+++ b/app/models/user.py[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-from sqlalchemy import Column, Integer, String, ForeignKey[m
+[32m+[m[32mfrom sqlalchemy import Column, Integer, String[m
+ from sqlalchemy.orm import relationship[m
+ from app.core.config import db[m
+ [m
+[1mdiff --git a/app/repositories/dicas_lugares_repo.py b/app/repositories/dicas_lugares_repo.py[m
+[1mindex b7b856b..91ccfb1 100644[m
+[1m--- a/app/repositories/dicas_lugares_repo.py[m
+[1m+++ b/app/repositories/dicas_lugares_repo.py[m
+[36m@@ -1,12 +1,43 @@[m
+ from app.models.dicas_lugares import DicaLugar[m
+ from app.repositories.base_repo import BaseRepository[m
+[32m+[m[32mfrom app.models.imoveis import Imovel[m
+[32m+[m
+[32m+[m
+ [m
+ class DicasLugaresRepository(BaseRepository):[m
+ [m
+[32m+[m[32m    def criar(self, imovel_id: int, dados) -> DicaLugar:[m
+[32m+[m[32m        data = dados.model_dump()[m
+[32m+[m
+[32m+[m[32m        if data.get("map_link"):[m
+[32m+[m[32m            data["map_link"] = str(data["map_link"])[m
+[32m+[m[32m        if data.get("tipo"):[m
+[32m+[m[32m            data["tipo"] = str(data["tipo"])[m
+[32m+[m[32m        dica = DicaLugar([m
+[32m+[m[32m            imovel_id=imovel_id,[m
+[32m+[m[32m            **data[m
+[32m+[m[32m        )[m
+[32m+[m
+[32m+[m[32m        self.db.add(dica)[m
+[32m+[m[32m        return dica[m
+[32m+[m[41m    [m
+ [m
+[32m+[m[41m    [m
+     def get_by_id(self, dicas_lugares_id: int):[m
+         return self.db.get(DicaLugar, dicas_lugares_id)[m
+ [m
+[32m+[m[32m    def get_by_id_imovel_user(self, dica_id: int, imovel_id: int, user_id: int):[m
+[32m+[m[32m        return ([m
+[32m+[m[32m            self.db.query(DicaLugar)[m
+[32m+[m[32m            .join(Imovel)[m
+[32m+[m[32m            .filter([m
+[32m+[m[32m                DicaLugar.id == dica_id,[m
+[32m+[m[32m                DicaLugar.imovel_id == imovel_id,[m
+[32m+[m[32m                Imovel.user_id == user_id[m
+[32m+[m[32m            )[m
+[32m+[m[32m            .first()[m
+[32m+[m[32m        )[m
+[32m+[m
+     # Listar dicas de lugares para um imovel[m
+     def list_by_imovel(self, imovel_id: int) -> list[DicaLugar]:[m
+         return self.db.query(DicaLugar).filter(DicaLugar.imovel_id == imovel_id).all()[m
+[1mdiff --git a/app/schemas/dicas_lugares_schema.py b/app/schemas/dicas_lugares_schema.py[m
+[1mindex 9b416b0..8a02cbf 100644[m
+[1m--- a/app/schemas/dicas_lugares_schema.py[m
+[1m+++ b/app/schemas/dicas_lugares_schema.py[m
+[36m@@ -37,9 +37,9 @@[m [mclass DicasLugaresSchemaUpdate(DicasLugaresBase):[m
+ [m
+ [m
+ class DicasLugaresSchemaResponse(BaseModel):[m
+[31m-    id:int[m
+[31m-    imovel:int[m
+[31m-    tipo: TipoDica[m
+[32m+[m[32m    id: int[m
+[32m+[m[32m    imovel_id: int[m
+[32m+[m[32m    tipo: str[m
+     nome: str[m
+     descricao: Optional[str] = None[m
+     telefone: Optional[str] = None[m
+[1mdiff --git a/app/services/dicas_lugares_service.py b/app/services/dicas_lugares_service.py[m
+[1mindex 323865e..a0e3659 100644[m
+[1m--- a/app/services/dicas_lugares_service.py[m
+[1m+++ b/app/services/dicas_lugares_service.py[m
+[36m@@ -1,7 +1,7 @@[m
+ from app.repositories.dicas_lugares_repo import DicasLugaresRepository[m
+ from app.repositories.imoveis_repo import ImovelRepository[m
+ fro

@@ -37,9 +37,9 @@ class DicasLugaresSchemaUpdate(DicasLugaresBase):
 
 
 class DicasLugaresSchemaResponse(BaseModel):
-    id:int
-    imovel:int
-    tipo: TipoDica
+    id: int
+    imovel_id: int
+    tipo: str
     nome: str
     descricao: Optional[str] = None
     telefone: Optional[str] = None
