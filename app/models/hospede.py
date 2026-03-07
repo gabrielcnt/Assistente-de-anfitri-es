@@ -12,7 +12,7 @@ class Hospede(db.base):
     nome = Column(String, nullable=False)
     telefone = Column(String, nullable=False)
 
-    criado_em = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
     conversas = relationship("Conversa", back_populates="hospede")
     imovel = relationship("Imovel", back_populates="hospedes")

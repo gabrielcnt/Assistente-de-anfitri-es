@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 
 from app.core.config import db
@@ -16,4 +16,6 @@ class DicaLugar(db.base):
     telefone = Column(String, nullable=True)
     map_link = Column(String, nullable=True)
 
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    
     imovel = relationship("Imovel", back_populates="dicas_lugares")
