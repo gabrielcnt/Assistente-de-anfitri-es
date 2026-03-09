@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 from app.schemas.user_schema import UserSchemaResponse
+from app.core.security import hash_password
 
 import secrets
 
@@ -22,7 +23,7 @@ def seed_user(db: Session):
                 username=dados["username"],
                 email=dados["email"],
                 role=dados["role"],
-                senha_hash=secrets.token_urlsafe(8)
+                senha_hash=hash_password("12345")
             )
 
             db.add(user)
