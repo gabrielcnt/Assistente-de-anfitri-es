@@ -23,7 +23,7 @@ class MensagemSchemaCreate(BaseModel):
     conteudo: Optional[str] = None
     tipo: TipoMensagem = TipoMensagem.texto
     mensagem_externa_id: Optional[str] = None
-    arquivo_url: Optional[str] = None
+    media_url: Optional[str] = None
 
 
 class MensagemSchemaResponse(BaseModel):
@@ -32,8 +32,8 @@ class MensagemSchemaResponse(BaseModel):
     papel: PapelMensagem
     conteudo: Optional[str] = None
     tipo: TipoMensagem
-    mensagem_externa_url: Optional[str]
-    arquivo_url: Optional[str]
-    criado_em: datetime
+    mensagem_externa_id: Optional[str]
+    media_url: Optional[str]
+    created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
