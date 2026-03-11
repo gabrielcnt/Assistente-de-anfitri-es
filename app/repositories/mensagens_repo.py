@@ -1,6 +1,5 @@
 from app.repositories.base_repo import BaseRepository
 from app.models.mensagens import Mensagem
-from app.models.conversas import Conversa
 from sqlalchemy import func
 
 class MensagemRepository(BaseRepository):
