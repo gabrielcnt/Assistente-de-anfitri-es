@@ -12,12 +12,12 @@ class MensagemRepository(BaseRepository):
         return self.db.query(Mensagem).filter(Mensagem.mensagem_externa_id == mensagem_externa_id).first()
 
     def list_by_conversa(self, conversa_id: int):
-        return self.db.query(Mensagem).filter(Mensagem.conversa_id == conversa_id).order_by(Mensagem.criado_em.asc()).all()
+        return self.db.query(Mensagem).filter(Mensagem.conversa_id == conversa_id).order_by(Mensagem.created_at.asc()).all()
     
     def buscar_ultimas_mensagens(self, conversa_id: int, limit: int = 10):
         return self.db.query(Mensagem).filter(
             Mensagem.conversa_id == conversa_id
-            ).order_by(Mensagem.criado_em.desc()).limit(limit).all()
+            ).order_by(Mensagem.created_at.desc()).limit(limit).all()
         
     def count_by_mensagens(self, conversa_id: int):
         return self.db.query(func.count(Mensagem.id)).filter(Mensagem.conversa_id == conversa_id).scalar()

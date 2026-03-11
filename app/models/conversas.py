@@ -25,4 +25,4 @@ class Conversa(db.base):
 
     imovel = relationship("Imovel", back_populates="conversas")
     hospede = relationship("Hospede", back_populates="conversas")
-    mensagens = relationship("Mensagem", back_populates="conversa", cascade="all, delete-orphan", order_by="Mensagem.criado_em")
+    mensagens = relationship("Mensagem", back_populates="conversa", cascade="all, delete-orphan", order_by="Mensagem.created_at")
