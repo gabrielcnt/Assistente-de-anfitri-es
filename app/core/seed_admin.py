@@ -4,8 +4,6 @@ from app.models.user import User
 from app.schemas.user_schema import UserSchemaResponse
 from app.core.security import hash_password
 
-import secrets
-
 
 def seed_user(db: Session):
 
@@ -30,5 +28,3 @@ def seed_user(db: Session):
 
     db.commit()
     
-    return UserSchemaResponse.model_validate(user)
-

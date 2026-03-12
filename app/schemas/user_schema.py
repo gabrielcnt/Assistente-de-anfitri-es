@@ -36,3 +36,7 @@ class UserSchemaAlterarSenha(BaseModel):
     senha_atual: str
     senha_nova: str
     confirmar_senha: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
