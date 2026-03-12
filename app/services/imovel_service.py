@@ -72,6 +72,7 @@ class ImovelService:
             if not imovel:
                 raise ImovelNaoEncontrado("Imóvel não encontrado.")
             
+
             self.db.delete(imovel)
             self.db.commit()
 
