@@ -1,6 +1,6 @@
 import pytest
 from app.core.security import hash_password, verify_password
-
+import secrets
 
 def test_hash_password():
     senha = "12345"
@@ -15,3 +15,4 @@ def test_verify_password():
 
     assert verify_password(senha, hash_da_senha) == True
     assert verify_password("senha incorreta", hash_da_senha) == False
+    
