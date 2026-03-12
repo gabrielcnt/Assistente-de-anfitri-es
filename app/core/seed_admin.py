@@ -8,7 +8,7 @@ from app.core.security import hash_password
 def seed_user(db: Session):
 
     usuarios = [
-        {"username": "devadmin", "email": "gabrieladmin@email.com", "role": "admin"},
+        {"username": "admin", "email": "admin@email.com", "role": "admin"},
         {"username": "user1", "email": "user1@email.com", "role": "user"},
     ]
 

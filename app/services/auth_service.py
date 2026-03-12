@@ -33,3 +33,4 @@ class AuthService:
             "token_type": "bearer",
             "first_login": user.is_first_login
         }
+    
