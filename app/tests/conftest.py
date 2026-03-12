@@ -43,12 +43,12 @@ def agente(db):
     return agente
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def user(db):
     user = User(
         username="user teste",
-        email="teste@email.com",
-        senha_hash="3nn39d0rkgr3#@4iot"
+        email="user1@email.com",
+        password="12345"
 
     )
     db.add(user)

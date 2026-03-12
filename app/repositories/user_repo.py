@@ -18,7 +18,7 @@ class UserRepository:
         user.is_first_login = False
         return user
 
-    def created_user(self, email: int, senha_hash: str, role: str = "user"):
+    def created_user(self, email: str, senha_hash: str, role: str = "user"):
         user = User(
             email=email,
             senha_hash=senha_hash,
@@ -29,7 +29,7 @@ class UserRepository:
 
         return user
     
-    def exstis_by_email(self, email: str):
+    def exists_by_email(self, email: str):
         return (
             self.db.query(User).filter(User.email == email).first()
             is not None
