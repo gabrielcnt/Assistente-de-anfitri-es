@@ -29,6 +29,7 @@ def get_current_user(
         print("PAYLOAD:", payload)
 
         user_id = payload.get("sub")
+        role = payload.get("role")
 
         print("USER_ID:", user_id)
 
@@ -41,6 +42,8 @@ def get_current_user(
     
     user_repository = UserRepository(db)
     user = user_repository.get_by_id(int(user_id))
+
+    user.token_role = role
 
     print("USER:", user)
     
@@ -60,4 +63,15 @@ def required_admin(current_user: User = Depends(get_current_user)):
             detail="Permissão insuficiente"
         )
     
+    return current_user
+
+
+
+def block_if_password_change_required(current_user = Depends(get_current_user)):
+
+    if current_user.token_role == "password_change_required":
+        raise HTTPException(
+            status_code=403,
+            detail="Você precisa alterar sua senha antes de acessar o sistema."
+        )
     return current_user
