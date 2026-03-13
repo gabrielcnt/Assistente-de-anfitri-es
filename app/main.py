@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from contextlib import asynccontextmanager
 
-from app.core.seed_admin import seed_user
+from scripts.seed_admin import seed_user
 
 from app.core.config import db
 from app.core.init_db import init_db
