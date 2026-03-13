@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.api import imovel_router
 from app.api import dicas_lugares_router
 from app.api import auth_router
+from app.api import admin_router
 
 from dotenv import load_dotenv
 
@@ -31,6 +32,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(imovel_router.router)
 app.include_router(dicas_lugares_router.router)
 app.include_router(auth_router.router)
+app.include_router(admin_router.router)
 
 @app.get('/health')
 def health():

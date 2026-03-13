@@ -1,7 +1,6 @@
 from app.repositories.dicas_lugares_repo import DicasLugaresRepository
 from app.repositories.imoveis_repo import ImovelRepository
-from app.models.dicas_lugares import DicaLugar
-from app.schemas.dicas_lugares_schema import DicasLugaresSchemaCreate, DicasLugaresSchemaUpdate, DicasLugaresSchemaResponse
+from app.schemas.dicas_lugares_schema import DicasLugaresSchemaCreate, DicasLugaresSchemaUpdate
 
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError

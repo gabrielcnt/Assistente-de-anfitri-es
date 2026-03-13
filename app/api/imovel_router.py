@@ -6,7 +6,7 @@ from app.core.config import get_db
 from app.schemas.imovel_schema import ImovelSchemaCreate, ImovelSchemaUpdate, ImovelSchemaResponse
 from app.services.imovel_service import ImovelService, ImovelNaoEncontrado, ImovelDuplicadoError
 from app.repositories.imoveis_repo import ImovelRepository
-from app.dependencies.current_user import get_current_user
+from app.dependencies.current_user import block_if_password_change_required
 
 
 
@@ -15,7 +15,7 @@ router = APIRouter(prefix="/imoveis", tags=["Imoveis"])
 
 
 @router.post("/", response_model=ImovelSchemaResponse, status_code=201)
-def criar_imovel( imovel: ImovelSchemaCreate, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
+def criar_imovel( imovel: ImovelSchemaCreate, db: Session = Depends(get_db), current_user = Depends(block_if_password_change_required)):
     try:
         repo = ImovelRepository(db)
         service = ImovelService(db, repo)
@@ -27,7 +27,7 @@ def criar_imovel( imovel: ImovelSchemaCreate, db: Session = Depends(get_db), cur
 
 
 @router.get("/", response_model=List[ImovelSchemaResponse], status_code=200)
-def listar_imoveis_do_usuario(db: Session = Depends(get_db), current_user = Depends(get_current_user)):
+def listar_imoveis_do_usuario(db: Session = Depends(get_db), current_user = Depends(block_if_password_change_required)):
     
     repo = ImovelRepository(db)
     service = ImovelService(db, repo)
@@ -41,7 +41,7 @@ def atualizar_imovel(
     imovel_id: int,
     imovel_update: ImovelSchemaUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(block_if_password_change_required)
 ):
     try:
         repo = ImovelRepository(db)
@@ -58,7 +58,7 @@ def atualizar_imovel(
 
 
 @router.delete("/{imovel_id}")
-def deletar_imovel(imovel_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
+def deletar_imovel(imovel_id: int, db: Session = Depends(get_db), current_user = Depends(block_if_password_change_required)):
     try:
         repo = ImovelRepository(db)
         service = ImovelService(db, repo)

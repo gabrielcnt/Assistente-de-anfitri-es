@@ -34,3 +34,7 @@ class UserRepository:
             self.db.query(User).filter(User.email == email).first()
             is not None
         )
+    
+    def save(self, user: User):
+        self.db.add(user)
+        return user

@@ -41,3 +41,27 @@ def test_rota_protegida():
     
 
     assert response.status_code == 200
+
+def test_rota_admin():
+    # user normal
+    login_user = client.post("/auth/login", json={"email": "user1@email.com", "password": "12345"})
+    token_user = login_user.json()["access_token"]
+
+    # tentar acessar rota admin
+    responser_user = client.get(
+        "/admin-only",
+        headers={"Authorization": f"bearer {token_user}"}
+    )
+    assert responser_user.status_code == 403
+
+    # login admin
+    login_admin = client.post("/auth/login", json={"email": "admin@email.com", "password": "12345"})
+    token_admin = login_admin.json()["access_token"]
+    print(token_admin)
+    # acessar rota de admin
+    responser_admin = client.get(
+        "/admin-only",
+        headers={"Authorization": f"bearer {token_admin}"}
+    )
+
+    assert responser_admin.status_code == 200
