@@ -20,7 +20,7 @@ def seed_user(db: Session):
                 username=dados["username"],
                 email=dados["email"],
                 role=dados["role"],
-                senha_hash=hash_password("12345")
+                senha_hash=hash_password("123456789")
             )
 
             db.add(user)
