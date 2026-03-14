@@ -5,8 +5,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 
 
-class ImovelIndexService:
-
+class DicasIndexService:
+    
     def __init__(
             self,
             embedding_service: EmbeddingService,
@@ -17,27 +17,27 @@ class ImovelIndexService:
         self.repository = repository
         self.db = db
 
-    
-    def indexar_imovel(self, imovel):
+
+
+    def indexar_dicas(self, dica):
+        
         try:
-            textos = [
-                imovel.regras,
-                imovel.checkin_info,
-                imovel.checkout_info
-            ]
+            descricao = dica.descricao or ""
 
-            for texto in textos:
-                if not texto:
-                    return
+            texto = f"""
+            Lugar: {dica.nome}
+            Tipo: {dica.tipo}
+            Descrição: {descricao}
+            """
 
-                vetor = self.embedding_service.gerar_embedding(texto)
+            vetor = self.embedding_service.gerar_embedding(texto)
 
-                registro = self.repository.criar(
-                    entidade="imovel",
-                    entidade_id=imovel.id,
-                    conteudo=texto,
-                    vetor=vetor
-                )
+            registro = self.repository.criar(
+                entidade="dica_lugar",
+                entidade_id=dica.id,
+                conteudo=texto,
+                vetor=vetor
+            )
 
             self.db.commit()
             self.db.refresh(registro)
@@ -47,5 +47,3 @@ class ImovelIndexService:
         except SQLAlchemyError:
             self.db.rollback()
             raise
-
-    
