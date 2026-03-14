@@ -21,8 +21,6 @@ class ConhecimentoEmbeddingRepository:
         )
 
         self.db.add(registro)
-        self.db.commit()
-        self.db.refresh(registro)
         
         return registro
     
