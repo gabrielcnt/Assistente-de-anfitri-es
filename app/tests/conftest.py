@@ -26,17 +26,17 @@ def db():
 
 
 @pytest.fixture
-def agente(db):
-    agente = Agent(
+def agent(db):
+    agent = Agent(
         nome="Agente_teste",
-        numero_whatsapp="21968766766",
-        nivel_proatividade="baixo",
-        usar_emojis=True,
+        number_whatsapp="21968766766",
+        proactivity_level="baixo",
+        use_emojis=True,
     )
-    db.add(agente)
+    db.add(agent)
     db.commit()
-    db.refresh(agente)
-    return agente
+    db.refresh(agent)
+    return agent
 
 
 @pytest.fixture(scope="function")
