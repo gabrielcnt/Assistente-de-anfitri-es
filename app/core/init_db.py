@@ -1,5 +1,3 @@
-import app.models
-
 from app.core.config import Base, engine
 
 
