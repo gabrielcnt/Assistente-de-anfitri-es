@@ -1,24 +1,20 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from app.core.config import Base
-import app.models
-from app.models.agente import Agente
+from app.models.agent import Agent
 from app.models.user import User
 
 # banco na memória
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
-test_session_local = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+test_session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 
 @pytest.fixture(scope="function")
 def db():
@@ -30,27 +26,22 @@ def db():
 
 
 @pytest.fixture
-def agente(db):
-    agente = Agente(
+def agent(db):
+    agent = Agent(
         nome="Agente_teste",
-        numero_whatsapp="21968766766",
-        nivel_proatividade="baixo",
-        usar_emojis=True
+        number_whatsapp="21968766766",
+        proactivity_level="baixo",
+        use_emojis=True,
     )
-    db.add(agente)
+    db.add(agent)
     db.commit()
-    db.refresh(agente)
-    return agente
+    db.refresh(agent)
+    return agent
 
 
 @pytest.fixture(scope="function")
 def user(db):
-    user = User(
-        username="user teste",
-        email="user1@email.com",
-        password="12345"
-
-    )
+    user = User(username="user teste", email="user1@email.com", password="12345")
     db.add(user)
     db.commit()
     db.refresh(user)

@@ -1,14 +1,15 @@
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
-
+from datetime import datetime
 from typing import Optional
 
-from datetime import datetime
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
 
 class UserSchemaCreate(BaseModel):
     username: str
     email: EmailStr
-    senha: str = Field(min_length=8, max_length=64)
+    password: str = Field(min_length=8, max_length=64)
     role: str = "user"
+
 
 class UserSchemaResponse(BaseModel):
     id: int
@@ -21,9 +22,11 @@ class UserSchemaResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class UserSchemaUpdate(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
+
 
 class UserSchemaUpdateAdmin(BaseModel):
     username: Optional[str] = None
@@ -32,11 +35,13 @@ class UserSchemaUpdateAdmin(BaseModel):
     is_active: Optional[bool] = None
     role: Optional[str] = None
 
-class UserSchemaAlterarSenha(BaseModel):
-    senha_atual: str = Field(min_length=8, max_length=64)
-    senha_nova: str = Field(min_length=8, max_length=64)
-    confirmar_senha: str = Field(min_length=8, max_length=64)
+
+class UserSchemaChangePassword(BaseModel):
+    current_password: str = Field(min_length=8, max_length=64)
+    new_password: str = Field(min_length=8, max_length=64)
+    confirm_password: str = Field(min_length=8, max_length=64)
+
 
 class LoginRequest(BaseModel):
     email: EmailStr
-    senha: str = Field(min_length=8, max_length=64)
+    password: str = Field(min_length=8, max_length=64)
