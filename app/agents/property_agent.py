@@ -8,7 +8,7 @@ class PropertyAgent:
         self.retrieval_service = retrieval_service
 
         self.agent = Agent(
-            model="gpt-4o-mini",
+            model="openai:gpt-4o-mini",
             instructions="""
             Você é um concierge digital de um imóvel.
 

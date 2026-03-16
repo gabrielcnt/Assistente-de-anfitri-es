@@ -33,3 +33,6 @@ class KnowledgeEmbeddingRepository:
             )
             .all()
         )
+
+    def get_all(self):
+        return self.db.query(KnowledgeEmbedding).all()

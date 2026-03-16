@@ -47,3 +47,7 @@ class AgentSchemaResponse(BaseModel):
     warning: Optional[str] = None
     is_active: bool
     model_config = ConfigDict(from_attributes=True)
+
+
+class ChatRequest(BaseModel):
+    question: str
