@@ -1,6 +1,6 @@
-from app.utils.vector_similarity import cosine_similarity
 from sqlalchemy.orm import Session
 
+from sklearn.metrics.pairwise import cosine_similarity
 
 class RetrievalService:
     def __init__(self, embedding_service, repository, db: Session):
@@ -17,7 +17,10 @@ class RetrievalService:
         results = []
 
         for item in embeddings:
-            score = cosine_similarity([question_embedding], [item.vector])[0][0]
+            print(type(item.embedding))
+            print(len(item.embedding))
+            print(item.embedding[:5])
+            score = cosine_similarity([question_embedding], [item.embedding])[0][0]
             results.append((score, item))
 
         results.sort(key=lambda x: x[0], reverse=True)

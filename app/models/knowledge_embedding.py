@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String, Text
+from sqlalchemy import Column, DateTime, Integer, String, Text, JSON
 
 from app.core.config import db
 
@@ -14,6 +14,6 @@ class KnowledgeEmbedding(db.base):
     entity_id = Column(Integer, nullable=False)
 
     content = Column(Text, nullable=False)
-    embedding = Column(Text, nullable=False)
+    embedding = Column(JSON, nullable=False)
 
     created_at = Column(DateTime, default=datetime.now())

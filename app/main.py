@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI
 
-from app.api import admin_router, auth_router, places_tips_router, property_router, agent_router
+from app.api import admin_router, auth_router, places_tips_router, property_router, agent_router, indexing
 from app.core.config import db
 from app.core.init_db import init_db
 from scripts.seed_admin import seed_user
@@ -30,6 +30,7 @@ app.include_router(places_tips_router.router)
 app.include_router(auth_router.router)
 app.include_router(admin_router.router)
 app.include_router(agent_router.router)
+app.include_router(indexing.router)
 
 
 @app.get("/health")

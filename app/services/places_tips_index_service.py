@@ -27,7 +27,8 @@ class TipsIndexService:
             Tipo: {tip.type}
             Descrição: {description}
             """
-            chunks = ChunkService.generate_chunks(text)
+            chunk_service = ChunkService
+            chunks = chunk_service.generate_chunks(text)
 
             for chunk in chunks:
                 vector = self.embedding_service.generate_embedding(chunk)
