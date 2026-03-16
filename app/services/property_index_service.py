@@ -2,6 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.repositories.knowledge_embedding_repo import KnowledgeEmbeddingRepository
+from app.services.chunks_service import ChunkService
 from app.services.embedding_service import EmbeddingService
 
 
@@ -22,21 +23,23 @@ class PropertyIndexService:
 
             for text in texts:
                 if not text:
-                    return
+                    continue
 
-                vector = self.embedding_service.generate_embedding(text)
+                chunks = ChunkService.generate_chunks(text)
 
-                registration = self.repository.create(
-                    entity="property",
-                    entity_id=property.id,
-                    content=text,
-                    vector=vector,
-                )
+                for chunk in chunks:
+                    vector = self.embedding_service.generate_embedding(chunk)
+
+                    self.repository.create(
+                        entity="property",
+                        entity_id=property.id,
+                        content=chunk,
+                        vector=vector,
+                    )
 
             self.db.commit()
-            self.db.refresh(registration)
 
-            return registration
+            return True
 
         except SQLAlchemyError:
             self.db.rollback()

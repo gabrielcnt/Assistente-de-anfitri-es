@@ -2,6 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.repositories.knowledge_embedding_repo import KnowledgeEmbeddingRepository
+from app.services.chunks_service import ChunkService
 from app.services.embedding_service import EmbeddingService
 
 
@@ -26,17 +27,18 @@ class TipsIndexService:
             Tipo: {tip.type}
             Descrição: {description}
             """
+            chunks = ChunkService.generate_chunks(text)
 
-            vector = self.embedding_service.generate_embedding(text)
+            for chunk in chunks:
+                vector = self.embedding_service.generate_embedding(chunk)
 
-            registration = self.repository.create(
-                entity="place_tip", entity_id=tip.id, content=text, vector=vector
-            )
+                self.repository.create(
+                    entity="place_tip", entity_id=tip.id, content=text, vector=vector
+                )
 
             self.db.commit()
-            self.db.refresh(registration)
 
-            return registration
+            return True
 
         except SQLAlchemyError:
             self.db.rollback()
