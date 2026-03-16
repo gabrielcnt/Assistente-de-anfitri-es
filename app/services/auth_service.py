@@ -24,14 +24,14 @@ class AuthService:
         self.user_repository = user_repository
         self.db = db
 
-    def login(self, email: str, senha: str):
+    def login(self, email: str, password: str):
 
         user = self.user_repository.get_by_email(email)
 
         if not user:
             raise InvalidCredential("Credencial inválida")
 
-        if not verify_password(senha, user.password_hash):
+        if not verify_password(password, user.password_hash):
             raise InvalidCredential("Credencial inválida")
 
         role = "password_change_required" if user.is_first_login else "user"

@@ -21,4 +21,4 @@ class Guest(db.base):
     )
 
     conversations = relationship("Conversation", back_populates="guest")
-    property = relationship("Property", back_populates="guests")
+    property = relationship("Property", back_populates="guest")

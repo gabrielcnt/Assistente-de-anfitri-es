@@ -1,11 +1,13 @@
 from app.utils.vector_similarity import cosine_similarity
+from sqlalchemy.orm import Session
 
 
 class RetrievalService:
-    def __init__(self, embedding_service, repository):
+    def __init__(self, embedding_service, repository, db: Session):
 
         self.embedding_service = embedding_service
         self.repository = repository
+        self.db = db
 
     def search_context(self, question: str, top_k: int = 3):
         question_embedding = self.embedding_service.generate_embedding(question)

@@ -10,11 +10,11 @@ class Conversation(db.base):
     __tablename__ = "conversations"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    imovel_id = Column(
-        Integer, ForeignKey("property.id", ondelete="CASCADE"), nullable=False
+    property_id = Column(
+        Integer, ForeignKey("properties.id", ondelete="CASCADE"), nullable=False
     )
-    hospede_id = Column(Integer, ForeignKey("guests.id"), nullable=False)
-    canal = Column(Enum("telegram", "whatsapp", name="talk_channel"), nullable=False)
+    guest_id = Column(Integer, ForeignKey("guests.id"), nullable=False)
+    channel = Column(Enum("telegram", "whatsapp", name="talk_channel"), nullable=False)
     status = Column(
         Enum(
             "ativa_ia",

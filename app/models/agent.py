@@ -8,7 +8,7 @@ class Agent(db.base):
 
     id = Column(Integer, primary_key=True)
 
-    nome = Column(String, nullable=True)
+    name = Column(String, nullable=True)
     personality_text = Column(Text, nullable=True)
     tone_of_voice = Column(String, nullable=True)
     welcome_message = Column(Text, nullable=True)
